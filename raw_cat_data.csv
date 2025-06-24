@@ -1,0 +1,107 @@
+Name ,Identifier,Region ,Age,Sex,HR Size (ha),d13C,d15N,Associated Dry Food,Associated Wet Food,Part of Analysis?
+Crash,H46,Midwest,16,Male,N/A,-14,7.06,DF34,N/A,N
+Crash,H46_2,Midwest,16,Male,N/A,-14.04,6.54,DF34,N/A,N
+Kitty Boy,H64,Midwest,6,Male,4,-15.41,7.48,DF40,WF11,N
+Kitty Boy,H64_2,Midwest,6,Male,4,-15.48,7.32,DF40,WF11,N
+Mr. Fatty Man,H83,Midwest,3,Male,N/A,-14.55,6.14,DF43,N/A,N
+Mr. Fatty Man,H83_2,Midwest,3,Male,N/A,-14.55,5.67,DF43,N/A,N
+Mama Cat,H88,Midwest,N/A,N/A,N/A,-14.71,5.82,DF86,N/A,N
+Timothy,H89,Midwest,N/A,N/A,N/A,-14.71,6.15,DF87,N/A,N
+Mia,H14,Mountain West,7,Female,20.7,-18.78,7.26,DF48,N/A,N
+Mia,H14_2,Mountain West,7,Female,20.7,-18.75,6.8,DF48,N/A,N
+Elmer,H20,Mountain West,7,Male,N/A,-18.43,11.04,DF23,N/A,N
+Elmer,H20_2,Mountain West,7,Male,N/A,-18.26,6.78,DF23,N/A,N
+Mr. Zippers,H35,Non-contiguous,6,Male,N/A,-17.91,6.32,DF53 and DF53_2,N/A,N
+Mr. Zippers,H35_2,Non-contiguous,6,Male,N/A,-18.41,6.36,DF53 and DF53_2,N/A,N
+Smokey C,H2,Northeast,6,Male,3.4,-18.24,6.58,DF30,"WF8, WF13, WF14, WF17, WF19, WF22, WF26, WF27 and WF28",N
+Boo Boo Kitty,H8,Northeast,15,Female,0.2,-16.56,6.31,DF7 and DF7_2,"WF1, WF2, and WF3",N
+Louie,H15,Northeast,8,Male,11.3,-14.77,6.5,DF45,N/A,N
+Nikki,H19,Northeast,11,Female,7.1,-16.23,7.48,DF3,"WF13, WF14 and WF26",N
+Starbuck,H23,Northeast,9,Male,1.1,-14.44,6.55,DF56,N/A,N
+Milo,H28,Northeast,7,Male,1.2,-16.7,6.23,DF55,N/A,N
+Lupe,H29,Northeast,7,Male,4,-16.09,6.52,DF41,N/A,N
+Lupe,H29_2,Northeast,7,Male,4,-16.08,6.61,DF41,N/A,N
+Bongo,H34,Northeast,7,Male,6.2,-15.77,6.8,DF2,N/A,N
+Roukus,H44,Northeast,9,Female,12,-19.64,5.91,DF14,N/A,N
+Mindy,H47,Northeast,8,Female,6.6,-16.59,7.45,DF64,N/A,N
+Misu,H53,Northeast,12,Male,2.4,-15.51,8.71,N/A,"WF18, WF20, WF21, WF23, WF24, and WF25",N
+Poly,H55,Northeast,7,Female,2.4,-17.15,8.86,DF29 and DF29_2,WF12 and WF16,N
+Chester,H57,Northeast,7,Male,10.9,-19.54,6.86,DF77,N/A,N
+Milo,H58,Northeast,6,Male,1.2,-17.85,8.26,N/A,"WF14, WF26, WF27 and WF28",N
+Beluga,H59,Northeast,5,Male,5.1,-19.02,6.26,DF61,"WF5, WF7 and WF10",N
+Schubie,H62,Northeast,10,Female,1.6,-18.62,6.6,DF4,N/A,N
+Frank,H63,Northeast,6,Male,4.6,-17.98,6.65,DF18,"WF8, WF13, WF14, WF17, WF19, WF22, WF26, WF27 and WF28",N
+Roger,H67,Northeast,N/A,N/A,N/A,-17.6,7.22,DF20,"WF5, WF7, WF10, WF8, WF13, WF14, WF17, WF19, WF22, WF26, WF27 and WF28",N
+Shadow,H69,Northeast,6,Male,0.3,-18.15,6.41,DF35,"WF8, WF13, WF14, WF17, WF19, WF22, WF26, WF27 and WF28",N
+Lucky,H71,Northeast,15,Female,4.3,-18.13,6.79,DF10,N/A,N
+Pumpkin G.,H72,Northeast,15,Male,error,-15.86,7.46,DF42,"WF26, WF27 and WF28",N
+Natty Bumpo,H74,Northeast,11,Female,6.1,-14.45,8.47,DF28,"WF18, WF24 and WF25",N
+Peanut,H77,Northeast,4,Female,3.7,-15.18,6.66,DF24,"WF8, WF13, WF14, WF17, WF19, WF22, WF26, WF27 and WF28",N
+Hemingway,H80,Northeast,7,Male,1.2,-15.89,7.35,DF39,"WF13, WF14, WF19, WF26, WF27 and WF28",N
+Molly,H81,Northeast,N/A,N/A,N/A,-16.09,7.85,DF49,"WF13, WF14, WF19, WF26, WF27 and WF28",N
+Smokey J,H10,Pacific West,5,Female,N/A,-17.97,7.61,DF46,N/A,N
+Smokey J,H10_2,Pacific West,5,Female,N/A,-17.83,7.25,DF46,N/A,N
+Boo,H32,Pacific West,11,Female,N/A,-14.37,6.12,DF44,N/A,N
+Dude,H85,Pacific West,N/A,N/A,N/A,-17.72,6.42,DF90,N/A,N
+Softie,H86,Pacific West,N/A,N/A,N/A,-18.32,6.41,DF91,N/A,N
+Cocoa,H87,Pacific West,N/A,N/A,N/A,-19.21,6.75,DF92,N/A,N
+Clementine,H90,Pacific West,N/A,N/A,N/A,-18.71,7.07,DF84,N/A,N
+Archie,H91,Pacific West,N/A,N/A,N/A,-18.01,7.65,DF89 and DF89_2,N/A,N
+Luna C.,H92,Pacific West,N/A,N/A,N/A,-18.8,5.91,DF81,N/A,N
+Marley,H93,Pacific West,N/A,N/A,N/A,-16.27,5.96,DF85,"WF18, WF24 and WF25",N
+Hi-Five,H94,Pacific West,N/A,N/A,N/A,-16.33,7.12,DF83,"WF18, WF20, WF21, WF23, WF24, and WF25",N
+Bon Scott Angus Young,H95,Pacific West,N/A,N/A,N/A,-19.37,6.9,DF88 and DF88_2,N/A,N
+Bijou,H96,Pacific West,N/A,N/A,N/A,-15.5,6.49,DF82,N/A,N
+Sasquatch,H1,Southeast,8,Male,3.3,-16.69,7.26,DF76,WF13,Y
+Kicky,H3,Southeast,14,Female,N/A,-15.58,7.08,DF31,"WF8, WF13, WF14, WF17, WF19, WF22, WF26, WF27 and WF28",Y
+Ellie,H5,Southeast,N/A,Female,N/A,-19.07,6.05,DF52,"WF12, WF16 and WF15",Y
+Banjo,H6,Southeast,13,Female,1.2,-15.15,7.74,DF22,"WF18, WF20, WF21, WF23, WF24, and WF25",Y
+Tara,H7,Southeast,18,Female,1.4,-19.85,6.19,N/A,WF17 and WF22,Y
+Donald Fluffypants,H9,Southeast,7,Male,2.1,-17.3,6.68,DF51,N/A,Y
+George,H11,Southeast,4,Male,4.3,-14.92,5.95,DF65,N/A,Y
+Jitterbug,H12,Southeast,6,Female,4.7,-18.51,6.71,DF36,N/A,Y
+Sandstorm,H13,Southeast,7,Female,3.5,-20.11,6.13,N/A,WF9,Y
+Don Carlos,H16,Southeast,6,Male,1.1,-15.87,7.12,DF57,N/A,Y
+Tonka Apple,H17,Southeast,17,Male,3.2,-16.23,6.89,DF5,"WF18, WF20, WF21, WF23, WF24, and WF25",Y
+Smattie,H18,Southeast,10,Male,2.4,-19.79,5.61,DF15,WF13 and WF19,Y
+Beatle,H21,Southeast,11,Male,5.7,-15.38,6.44,DF75,"WF13, WF14, WF19, WF26, WF27 and WF28",Y
+Snickerdoodle,H22,Southeast,9,Female,2.4,-15.7,6.25,DF6,N/A,Y
+Leopard,H24,Southeast,6,Male,12,-16.04,7.11,DF68,"WF18, WF20, WF21, WF23, WF24, and WF25",Y
+Sunny Z.,H25,Southeast,12,Female,error,-15.91,6.98,DF25,N/A,Y
+Tallulah,H26,Southeast,3,Female,1.7,-16.04,6.84,DF57,N/A,Y
+Cayden,H27,Southeast,8,Male,2.4,-16.49,7.09,DF50,"WF13, WF14, WF19, WF26, WF27 and WF28",Y
+Cayden,H27_2,Southeast,8,Male,2.4,-16.33,6.56,DF50,"WF13, WF14, WF19, WF26, WF27 and WF28",Y
+Hailey,H30,Southeast,14,Female,0.9,-17.14,7.39,DF37,N/A,Y
+Captain America,H31,Southeast,12,Male,error,-17.94,6.54,DF78,"WF8, WF13, WF14, WF17, WF19, WF22, WF26, WF27 and WF28",Y
+Luna A. ,H33,Southeast,3,Female,N/A,-16.52,6.03,DF66,N/A,Y
+Fiona,H36,Southeast,4,Female,1.1,-14.8,5.69,DF54,N/A,Y
+Luna M.,H37,Southeast,8,Female,3.5,-15.87,5.75,DF70 and DF70_2,N/A,Y
+Climber,H38,Southeast,9+,Male,4,-15.91,6.74,DF47,N/A,Y
+Fey,H39,Southeast,7,Female,N/A,-17.71,8.94,DF38,N/A,Y
+Tiger,H40,Southeast,9,Male,3.2,-18.47,7.91,DF9,WF12 and WF16,Y
+Jetpack,H41,Southeast,6,Female,4.9,-18.29,6.18,DF36,N/A,Y
+Pumpkin K.,H42,Southeast,11,Female,1.9,-18.64,6.72,DF67,N/A,Y
+Bella,H43,Southeast,8,Female,4.6,-17.82,7.13,DF58,N/A,Y
+Catniss Everdeen,H45,Southeast,5,Female,1.3,-16.43,6.2,DF51,N/A,Y
+Boris,H48,Southeast,4,Male,6.7,-16.75,6.15,DF26,N/A,Y
+Gracie,H49,Southeast,19,Female,2.5,-15.44,6.48,DF33,N/A,Y
+Joey,H50,Southeast,,,,-16.29,6.52,DF60,N/A,Y
+Oatmeal,H51,Southeast,9,Male,7.8,-18.67,7.27,DF59,WF12 and WF16,Y
+Trinity,H52,Southeast,N/A,N/A,N/A,-18.03,7.01,DF63,N/A,Y
+Gianni,H54,Southeast,14,Male,2.9,-19.5,5.23,DF12,WF13 and WF19,Y
+Vacuum,H56,Southeast,11,Male,N/A,-15.17,6.12,DF16,"WF13, WF14, WF19, WF26, WF27 and WF28",Y
+Sunny B.,H60,Southeast,unknown,Male,N/A,-15.18,6.75,DF32,N/A,Y
+Hershey,H61,Southeast,11,Male,5.8,-16.54,6.4,DF19,WF8,Y
+Oreo,H65,Southeast,9,Male,15.2,-15.7,6.07,DF74,"WF8, WF17 and WF22",Y
+Tex,H66,Southeast,9,Female,2.3,-16.42,7.14,DF8 and DF8_2,"WF13, WF14, WF19 and WF26",Y
+Ziggy,H68,Southeast,10,Male,3.6,-19.13,6.14,DF71,WF4 and WF6,Y
+Ziggy,H68_2,Southeast,10,Male,3.6,-19.19,6.19,DF71,WF4 and WF6,Y
+Orange,H70,Southeast,7,Female,0.5,-17.02,7.69,DF27,"WF20, WF21 and WF23",Y
+Nola,H73,Southeast,8,Female,2.6,-15.34,6.67,DF21 and DF21_2,N/A,Y
+Douglas,H75,Southeast,10,Male,1,-16.09,8.03,DF17,WF15,Y
+Pancho,H78,Southeast,14,Male,N/A,-16.52,8.69,DF1 and DF1_2,N/A,Y
+Hazel Grace,H79,Southeast,3,Female,N/A,-17.5,8.46,DF79 and DF79_2,"WF18, WF20, WF21, WF23, WF24, WF25, WF8, WF13, WF14, WF17, WF19, WF22, WF26, WF27 and WF28",Y
+Selkie,H82,Southeast,9,Female,3.5,-19.43,5.27,DF13,WF13 and WF19,Y
+Amber,H84,Southeast,unknown,Female,N/A,-14.63,6.41,DF69,N/A,Y
+Kitty,H4,Southwest,N/A,N/A,N/A,-15.85,7.27,DF73,N/A,N
+Lucy,H76,,,,N/A,-16.68,6.6,N/A,N/A,N

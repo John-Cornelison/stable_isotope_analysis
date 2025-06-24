@@ -1,0 +1,127 @@
+Brand,Flavor,Identifier,Region,d13C,d15N,Price for bag/pack of cans,$/lb,$/can (WF),$/kg,Part of Analysis?
+ Hill's,unknown flavor,DF40,Midwest,-19.12,4.29,$34.99 from Chewy.com for 15.5lb bag,$2.26,,$4.98,N
+ Iams,Proactive Health- Healthy adult original,DF43,Midwest,-15.26,3.63,$22.50 from Chewy.com for 16lb bag,$1.41,,$3.10,N
+ Paws and Claws ,Delish Mix,DF86,Midwest,-16.43,3.1,$8.99 from TSC for 16lb bag (only available from Tractor Supply Co.),$0.56,,$1.24,N
+ Paws and Claws ,Delish Mix,DF87,Midwest,-15.86,3.23,$8.99 from TSC for 16lb bag (only available from Tractor Supply Co.),$0.56,,$1.24,N
+ Purina,One- Vibrant Maturity 7+,DF34,Midwest,-19.5,3.73,$12.99 from Chewy.com for 7lb bag,$1.86,,$4.09,N
+ Blue ,Wilderness- Indoor Cat Chicken,DF48,Mountain West,-20.19,4.74,$34.99 from Chewy.com for 15lb bag,$2.33,,$5.14,N
+ Whole Earth Farms,Salmon,DF23,Mountain West,-22.34,5.49,$23.67 from Chewy.com for 10lb bag,$2.37,,$5.22,N
+Honest Kitchen,"Chicken recipe powder (""prowl"", mixed with Canidae pure)",DF53,Non-contiguous,-20.32,3.26,$45.07 from Chewy.com for 4lb box (dehydrated food mix),$11.27,,$24.84,N
+Honest Kitchen,"Chicken recipe powder (""prowl"", mixed with Canidae pure)",DF53_2,Non-contiguous,-20.24,3.1,$45.07 from Chewy.com for 4lb box (dehydrated food mix),$11.27,,$24.84,N
+ Canidae,Chicken meal and rice,DF4,Northeast,-19.77,3.96,$34.99 from Chewy.com for 15lb bag,$2.33,,$5.14,N
+Friskies,unknown flavor,DF10,Northeast,-15.21,4.75,$11.78 from Chewy.com for 16lb bag,$0.74,,$1.62,N
+Friskies,Seafood Sensations,DF28,Northeast,-20.34,4.5,$11.78 from Chewy.com for 16lb bag,$0.74,,$1.62,N
+Friskies,Seafood Sensations/Tender Crunchy Combo,DF24,Northeast,-14.83,3.92,$11.78 from Chewy.com for 16lb bag,$0.74,,$1.62,N
+ Hill's,Science Diet Adult,DF30,Northeast,-19.73,4.82,$34.99 from Chewy.com for 15.5lb bag,$2.26,,$4.98,N
+ Hill's,Science Diet Adult,DF35,Northeast,-19.03,4.78,$34.99 from Chewy.com for 15.5lb bag,$2.26,,$4.98,N
+ Hill's,Science Diet Age Defying,DF64,Northeast,-20.24,4.71,$34.99 from Chewy.com for 15.5lb bag,$2.26,,$4.98,N
+ Iams,Proactive Health- Healthy adult 1+ years,DF3,Northeast,-15.24,3.88,$22.50 from Chewy.com for 16lb bag,$1.41,,$3.10,N
+ Iams,Healthy Naturals Chicken,DF32,Northeast,-19.64,4.68,$26.79 from Chewy.com for 13.5lb bag,$1.98,,$4.38,N
+ Meow Mix,Original Choice,DF56,Northeast,-17.95,3.37,$11.49 from Chewy.com for 16lb bag,$0.72,,$1.58,N
+ Meow Mix,Original Choice,DF7,Northeast,-15.53,3.48,$11.49 from Chewy.com for 16lb bag,$0.72,,$1.58,N
+ Meow Mix,Original Choice,DF7_2,Northeast,-15.98,3.28,$11.49 from Chewy.com for 16lb bag,$0.72,,$1.58,N
+ Natural Balance,unknown flavor,DF77,Northeast,-22.04,3.97,$26.99 from Chewy.com for 10lb bag,$2.70,,$5.95,N
+Nutro Max,all flavors,DF55,Northeast,-19.99,4.92,$24.29 from Chewy.com for 16lb bag,$1.52,,$3.35,N
+ Purina,Cat Chow Complete,DF2,Northeast,-18.5,4.69,$11.99 from Chewy.com for 16lb bag,$0.75,,$1.65,N
+ Purina,Pro Plan Savor- Adult Chicken and Rice Formula,DF20,Northeast,-19.13,4.27,$36.98 from Chewy.com for 16lb bag,$2.31,,$5.10,N
+ Purina,Pro Plan Adult Salmon and Rice,DF41,Northeast,-19.45,5.1,$36.98 from Chewy.com for 16lb bag,$2.31,,$5.10,N
+ Purina,various flavors,DF45,Northeast,-15.55,4.15,unknown but looks like K&K,$0.66,,$1.45,N
+ Purina,Pro Plan Savor- Adult Chicken and Rice Formula,DF61,Northeast,-18.78,4.13,$36.98 from Chewy.com for 16lb bag,$2.31,,$5.10,N
+ Taste of the Wild,Salmon and Deboned Turkey,DF18,Northeast,-24.64,6.21,$30.99 from Chewy.com for 15 lb bag,$2.07,,$4.56,N
+ Taste of the Wild*,Rocky Mountain,DF14,Northeast,-21.53,3.58,$30.99 from Chewy.com for 15 lb bag,$2.07,,$4.56,N
+ Trader Joe's,Wholesome and Natural,DF29,Northeast,-21.09,4.18,"$11.69 from Amazon.com for 3lb bag (dry food, only at Trader Joe's)",$3.90,,$8.59,N
+ Trader Joe's,Wholesome and Natural,DF29_2,Northeast,-20.94,9.93,"$11.69 from Amazon.com for 3lb bag (dry food, only at Trader Joe's)",$3.90,,$8.59,N
+ Wellness,Complete Health- Healthy Weight,DF39,Northeast,-23.2,5.57,$30.68 from Chewy.com for 12lb bag of Wellness Complete Health Flavors,$2.56,,$5.64,N
+ Wellness,Complete Health- Healthy Weight,DF49,Northeast,-23.15,5.7,$30.68 from Chewy.com for 12lb bag of Wellness Complete Health Flavors,$2.56,,$5.64,N
+ Blue ,Indoor Health with life source bits,DF89,Pacific West,-21.21,5.56,$31.99 from Chewy.com for 15lb bag,$2.13,,$4.70,N
+ Blue ,Indoor Health with life source bits,DF89_2,Pacific West,-21.54,5.66,$31.99 from Chewy.com for 15lb bag,$2.13,,$4.70,N
+ Canidae,All life stages varieties,DF90,Pacific West,-20.48,3.57,$35.99 from Chewy.com for 15lb bag,$2.40,,$5.29,N
+ Canidae,All life stages varieties,DF91,Pacific West,-19.54,3.55,$35.99 from Chewy.com for 15lb bag,$2.40,,$5.29,N
+ Canidae,All life stages varieties,DF92,Pacific West,-20.6,3.57,$35.99 from Chewy.com for 15lb bag,$2.40,,$5.29,N
+ First Mate,Grain free limited ingredient with chicken and blueberries,DF88,Pacific West,-24.21,4.41,$31.50 from Chewy.com for 10lb bag,$3.15,,$6.95,N
+ First Mate,Grain free limited ingredient with chicken and blueberries,DF88_2,Pacific West,-24.15,4.85,$31.50 from Chewy.com for 10lb bag,$3.15,,$6.95,N
+ Hill's ,Science Diet- Sensetive Stomach and Skin,DF81,Pacific West,-18.91,3.74,$38.99 from Chewy.com for 15.5lb bag,$2.52,,$5.55,N
+ Iams,Proactive Health- Active adult,DF82,Pacific West,-15.46,3.25,$22.97 from Chewy.com for 16lb bag,$1.44,,$3.17,N
+ Iams,???,DF83,Pacific West,-20.72,4.42,$22.50 from Chewy.com for 16lb bag,$1.41,,$3.10,N
+ Kirkland,Chicken and Rice,DF46,Pacific West,-21.45,3.63,$29.99 from Costco.com for 25lb bag (only available from Costco),$1.20,,$2.65,N
+ Meow Mix,Original Choice,DF44,Pacific West,-15.71,3.66,$11.49 from Chewy.com for 16lb bag,$0.72,,$1.58,N
+ Purina,One- Indoor advantage,DF85,Pacific West,-20.08,3.09,$24.49 from Chewy.com for 16lb bag,$1.53,,$3.38,N
+ Whole Earth Farms,unknown flavor,DF84,Pacific West,-21.31,2.96,$23.67 from Chewy.com for 10lb bag,$2.37,,$5.22,N
+ Blue,Indoor Adult,DF27,Southeast,-21.6,6.64,$31.99 from Chewy.com for 15lb bag,$2.13,,$4.70,Y
+ Fancy Feast wet food fish,Ocean whitefish and tuna,WF18,Southeast,-18.06,9.88,$13.19 from Chewy.com for 24 cans of wet food (~4.5 lbs),$2.93,$0.55,$6.46,Y
+ Fancy Feast wet food fish,"Cod, Sole and Shrimp",WF24,Southeast,-18.49,9.28,$13.19 from Chewy.com for 24 cans of wet food (~4.5 lbs),$2.93,$0.55,$6.46,Y
+ Fancy Feast wet food fish,Savory Salmon,WF25,Southeast,-18.76,6.91,$13.19 from Chewy.com for 24 cans of wet food (~4.5 lbs),$2.93,$0.55,$6.46,Y
+ Fancy Feast wet food meat,Tender beef,WF20,Southeast,-17.42,7.2,$13.19 from Chewy.com for 24 cans of wet food (~4.5 lbs),$2.93,$0.55,$6.46,Y
+ Fancy Feast wet food meat,Turkey and Giblets,WF21,Southeast,-16.18,5.03,$13.19 from Chewy.com for 24 cans of wet food (~4.5 lbs),$2.93,$0.55,$6.46,Y
+ Fancy Feast wet food meat,Chicken,WF23,Southeast,-17.1,5.91,$13.19 from Chewy.com for 24 cans of wet food (~4.5 lbs),$2.93,$0.55,$6.46,Y
+ Friskies wet food fish,Seacaptain's Choice,WF13,Southeast,-19.36,9.58,$11.28 from Chewy.com for 24 cans of wet food (~8.25lbs),$1.37,$0.47,$3.01,Y
+ Friskies wet food fish,Salmon Dinner,WF14,Southeast,-20.56,6.25,$11.28 from Chewy.com for 24 cans of wet food (~8.25lbs),$1.37,$0.47,$3.01,Y
+ Friskies wet food fish,Mariner's Catch,WF19,Southeast,-19.19,6.95,$11.28 from Chewy.com for 24 cans of wet food (~8.25lbs),$1.37,$0.47,$3.01,Y
+ Friskies wet food fish,Ocean whitefish and tuna,WF26,Southeast,-19.16,7.86,$11.28 from Chewy.com for 24 cans of wet food (~8.25lbs),$1.37,$0.47,$3.01,Y
+ Friskies wet food meat,"Chicken, Cheese and Gravy",WF17,Southeast,-21.41,3.41,$11.28 from Chewy.com for 24 cans of wet food (~8.25lbs),$1.37,$0.47,$3.01,Y
+ Friskies wet food meat,Chicken in Gravy,WF22,Southeast,-19.44,3.32,$11.28 from Chewy.com for 24 cans of wet food (~8.25lbs),$1.37,$0.47,$3.01,Y
+ Friskies wet food meat,Turkey and Giblets Dinner,WF27,Southeast,-18.6,4.65,$11.28 from Chewy.com for 24 cans of wet food (~8.25lbs),$1.37,$0.47,$3.01,Y
+ Friskies wet food meat,Mixed Grill,WF28,Southeast,-17.02,4.66,$11.28 from Chewy.com for 24 cans of wet food (~8.25lbs),$1.37,$0.47,$3.01,Y
+ Friskies wet food meat,Turkey Dinner in Gravy,WF8,Southeast,-21.4,3.66,$11.28 from Chewy.com for 24 cans of wet food (~8.25lbs),$1.37,$0.47,$3.01,Y
+ Halo wet food meat,Spot's Stew- Chicken,WF9,Southeast,-17.92,4.01,$21.72 from Chewy.com for 12 cans of wet food (~4.125lbs),$5.27,$1.81,$11.61,Y
+ Harris Teeter Your Pet,generic,DF70,Southeast,-18.07,3.8,"$4.39 from Harris Teeter for 3.15lb bag (only available at HT, no online listing at all)",$1.39,,$3.07,Y
+ Harris Teeter Your Pet,generic,DF70_2,Southeast,-18.26,3.72,"$4.39 from Harris Teeter for 3.15lb bag (only available at HT, no online listing at all)",$1.39,,$3.07,Y
+ Hill's,Science Diet Hairball Adult 1-6,DF26,Southeast,-20.34,4.5,$38.99 from Chewy.com for 15.5lb bag,$2.52,,$5.55,Y
+ Hill's,Perscription Metabolic and Urinary,DF6,Southeast,-19.17,4.33,$69.99 from Chewy.com for 17.6lb bag,$3.98,,$8.77,Y
+ Hill's wet food meat,Science Diet- Savory Chicken,WF11,Southeast,-17.7,4.38,$27.84 from Chewy.com for 24 cans of wet food (~8.25),$3.37,$1.16,$7.44,Y
+ Iams,Adult and Senior,DF25,Southeast,-15.62,4.05,$22.97 from Chewy.com for 16lb bag,$1.44,,$3.17,Y
+ Iams,Healthy Adult Original,DF31,Southeast,-21.09,4.18,$22.50 from Chewy.com for 16lb bag,$1.41,,$3.10,Y
+ Iams,Adult and Senior,DF47,Southeast,-15.61,3.99,$22.97 from Chewy.com for 16lb bag,$1.44,,$3.17,Y
+ Iams,Proactive Health- Healthy adult 1+ years,DF50,Southeast,-15.26,6.56,$22.50 from Chewy.com for 16lb bag,$1.41,,$3.10,Y
+ Innova,out of production,DF67,Southeast,-21.42,6.56,"$27.66 from Chewy.com for 12lb bag (Innova brand discontinued, this is Evo which is comparable and from same company)",$2.31,,$5.08,Y
+ Kirkland,Chicken and Rice,DF36,Southeast,-20.87,3.95,$29.99 from Costco.com for 25lb bag (only available from Costco),$1.20,,$2.65,Y
+ Kirkland,Chicken and Rice,DF51,Southeast,-20.9,3.67,$29.99 from Costco.com for 25lb bag (only available from Costco),$1.20,,$2.65,Y
+ Kirkland,Chicken and Rice,DF57,Southeast,-21.26,3.74,$29.99 from Costco.com for 25lb bag (only available from Costco),$1.20,,$2.65,Y
+ Kit and Kaboodle,From Purina,DF16,Southeast,-16.1,3.88,$10.54 from Chewy.com for 16lb bag,$0.66,,$1.45,Y
+Kit and Kaboodle,From Purina,DF78,Southeast,-15.5,3.24,$10.54 from Chewy.com for 16lb bag,$0.66,,$1.45,Y
+ Kit and Kaboodle,From Purina,DF75,Southeast,-15.74,3.76,$10.54 from Chewy.com for 16lb bag,$0.66,,$1.45,Y
+ Meow Mix,Original Choice,DF54,Southeast,-15.77,3.34,$11.49 from Chewy.com for 16lb bag,$0.72,,$1.58,Y
+ Meow Mix,Original Choice,DF60,Southeast,-15.52,3.81,$11.49 from Chewy.com for 16lb bag,$0.72,,$1.58,Y
+ Meow Mix,Original Choice,DF65,Southeast,-15.79,3.47,$11.49 from Chewy.com for 16lb bag,$0.72,,$1.58,Y
+ Meow Mix,Original Choice,DF69,Southeast,-15.7,3.53,$11.49 from Chewy.com for 16lb bag,$0.72,,$1.58,Y
+ Natural Balance,Limited Ingredient Green Pea and Chicken,DF12,Southeast,-22.62,2.82,$26.99 from Chewy.com for 10lb bag,$2.70,,$5.95,Y
+ Natural Balance,Limited Ingredient Green Pea and Chicken,DF13,Southeast,-22.69,2.71,$26.99 from Chewy.com for 10lb bag,$2.70,,$5.95,Y
+ Natural Balance,Limited Ingredient Green Pea and Chicken,DF15,Southeast,-22.8,2.74,$26.99 from Chewy.com for 10lb bag,$2.70,,$5.95,Y
+NutroMax,Adult Chicken,DF8,Southeast,-19.17,4.33,$24.29 from Chewy.com for 16lb bag,$1.52,,$3.35,Y
+NutroMax,Adult Chicken,DF8_2,Southeast,-19.99,4,$24.29 from Chewy.com for 16lb bag,$1.52,,$3.35,Y
+Nutro Max,all flavors,DF66,Southeast,-19.73,4.79,$24.29 from Chewy.com for 16lb bag,$1.52,,$3.35,Y
+ Pet Pride (Nature's Variety),Poultry and Seafood,DF21,Southeast,-18.73,3.03,$37.99 from Chewy.com for 11lb bag,$3.45,,$7.62,Y
+ Pet Pride (Nature's Variety),Poultry and Seafood,DF21_2,Southeast,-18.29,3.06,$37.99 from Chewy.com for 11lb bag,$3.45,,$7.62,Y
+ Purina,One- Urinary Tract Health Formula,DF22,Southeast,-18.73,3.03,$22.99 from Chewy.com for 16lb bag,$1.44,,$3.17,Y
+ Purina,Cat Chow Complete,DF33,Southeast,-18.93,3.61,$11.99 from Chewy.com for 16lb bag,$0.75,,$1.65,Y
+ Purina,Cat Chow Complete,DF42,Southeast,-18.83,4,$11.99 from Chewy.com for 16lb bag,$0.75,,$1.65,Y
+ Purina,One- Salmon and Tuna,DF5,Southeast,-18.34,4.69,$22.99 from Chewy.com for 16lb bag,$1.44,,$3.17,Y
+ Purina,Beyond Natural- grain free ocean whitefish and egg,DF59,Southeast,-21.03,4.22,$11.79 from Chewy.com for 4.5lb bag,$2.62,,$5.78,Y
+ Purina,Cat Chow Complete,DF68,Southeast,-18.4,4.1,$11.99 from Chewy.com for 16lb bag,$0.75,,$1.65,Y
+ Purina,Cat Chow Complete,DF74,Southeast,-17.72,4.31,$11.99 from Chewy.com for 16lb bag,$0.75,,$1.65,Y
+ Purina,Complete/Natural,DF76,Southeast,-17.08,4.19,$12.98 from Chewy.com for 13lb bag,$1.00,,$2.20,Y
+ Purina,Beyond Natural- grain free ocean whitefish and egg,DF9,Southeast,-20.76,4.27,$11.79 from Chewy.com for 4.5lb bag,$2.62,,$5.78,Y
+ Purina ,Cat Chow Complete,DF19,Southeast,-18.63,4.21,$11.99 from Chewy.com for 16lb bag,$0.75,,$1.65,Y
+ Purina Wet food meat,Pro Plan- Whitemeat Chicken and vegetable,WF10,Southeast,-20.78,2.65,"$21.36 from Chewy.com for 24 cans of wet food (3oz cans, ~4.5lbs)",$4.76,$0.89,$10.49,y
+ Purina wet food meat,Pro plan- Chicken and Rice,WF5,Southeast,-21.36,3.65,$21.40 from Chewy.com for 24 cans of 3oz wet food (~4.5lbs),$4.76,$0.89,$10.49,Y
+ Purina wet food meat,Pro Plan- Turkey and Rice,WF7,Southeast,-21.45,3.94,$21.40 from Chewy.com for 24 cans of 3oz wet food (~4.5lbs),$4.76,$0.89,$10.49,y
+ Royal Canin,light,DF1,Southeast,-20.14,3.78,$57.59 from Chewy.com for 15.4lb bag,$3.74,,$8.25,Y
+ Royal Canin,light,DF1_2,Southeast,-20.41,3.52,$57.59 from Chewy.com for 15.4lb bag,$3.74,,$8.25,Y
+ Royal Canin,Persian Adult,DF37,Southeast,-21.12,3.72,$29.69 from Chewy.com for 7lb bag,$4.24,,$9.35,Y
+ Sheba: wet food fish,Perfect Portions- Delicate Salmon,WF4,Southeast,-18.34,6.3,$16.99 from Chewy.com for 48 packs (24 2.6oz double packs) of wet food (~)7.8lbs,$2.18,$0.35,$4.80,Y
+ Sheba: wet food meat,Perfect Portions- Roasted Turkey,WF6,Southeast,-17.38,4.28,$16.99 from Chewy.com for 48 packs (24 2.6oz double packs) of wet food (~)7.8lbs,$2.18,$0.35,$4.80,Y
+ Solid Gold/Indigo Moon,unknown,DF58,Southeast,-22.13,4.76,$33.29 from Chewy.com for 12lb bag,$2.77,,$6.12,Y
+ Solid Gold/Indigo Moon,unknown,DF63,Southeast,-22.61,4.64,$33.29 from Chewy.com for 12lb bag,$2.77,,$6.12,Y
+ Taste of the Wild,Rocky Mountain,DF52,Southeast,-22.44,3.12,$30.99 from Chewy.com for 15 lb bag,$2.07,,$4.56,Y
+ Taste of the Wild*,Rocky Mountain,DF71,Southeast,-21.21,3.09,$30.99 from Chewy.com for 15 lb bag,$2.07,,$4.56,Y
+ Trader Joe's: wet food fish,"Oceanfish, salmon and rice",WF16,Southeast,-21.49,6.23,"$24.50 from Amazon.com for 12 cans of wet food (~5.2lbs, only at Trader Joe's)",$4.71,$2.04,$10.39,Y
+ Trader Joe's: Wet food Tuna,Tuna,WF12,Southeast,-17.64,17.21,"$24.50 from Amazon.com for 12 cans of wet food (~5.2lbs, only at Trader Joe's)",$4.71,$2.04,$10.39,Y
+ Wellness,Complete Health- Salmon and Deboned Turkey,DF17,Southeast,-22.27,10.01,$30.68 from Chewy.com for 12lb bag of Wellness Complete Health Flavors,$2.56,,$5.64,Y
+ Wellness,all CORE flavors,DF38,Southeast,-20.22,7.64,$38.80 from Chewy.com for 11lb bag of Wellness CORE flavors,$3.53,,$7.78,Y
+ Wellness wet food meat,Complete Health- Beef and Chicken,WF15,Southeast,-17.08,5.05,$39.99 from Chewy.com for 24 cans of wet food (~8.25lbs),$4.85,$1.67,$10.69,Y
+ Whiska's Wet food meat,Chicken Dinner in Gravy,WF1,Southeast,-19.45,4.35,$4.88 from Chewy.com for 12 pack of 3oz pouches (~2.25lbs),$2.17,$0.41,$4.78,Y
+ Whiska's: wet food meat,Mixed Grill in Gravy,WF2,Southeast,-17.94,4.06,$4.88 from Chewy.com for 12 pack of 3oz pouches (~2.25lbs),$2.17,$0.41,$4.78,Y
+ Whiska's: wet food meat,Turkey in Gravy,WF3,Southeast,-18.15,4.49,$4.88 from Chewy.com for 12 pack of 3oz pouches (~2.25lbs),$2.17,$0.41,$4.78,Y
+ Wild Harvest,Chicken and chickpea with fruit,DF79,Southeast,-19.31,3.57,$7.59 from Shop'n Save.com for 3lb bag (Brand only available at some select stores?),$2.53,,$5.58,Y
+ Wild Harvest,Chicken and chickpea with fruit,DF79_2,Southeast,-19.36,3.41,$7.59 from Shop'n Save.com for 3lb bag (Brand only available at some select stores?),$2.53,,$5.58,Y
+ Purina,One- Tender selects blends,DF73,Southwest,-19.86,3.12,$21.44 from Chewy.com for 16lb bag,$1.34,,$2.95,N

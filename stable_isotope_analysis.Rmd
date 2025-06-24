@@ -1,0 +1,84 @@
+---
+title: "Stable Isotope Analysis"
+author: "John Cornelison"
+date: "2025-06-24"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+#Libraries
+library(simmr)
+library(MixSIAR)
+library(tidyverse)
+
+```
+
+```{r, echo = FALSE, warning = FALSE< message = FALSE}
+
+data("geese_data")
+
+
+geese_df <- as.data.frame(geese_data)
+
+mixtures_df <- as.data.frame(geese_data["mixtures"])
+
+df_1 <- as.data.frame(geese_data["source_names"])
+
+source_df <- as.data.frame(geese_data$source_means)
+colnames(source_df) <- c("d13C", "d15N")
+rownames(source_df) <- geese_data$source_names
+
+source_df
+
+simmr_in <- with(geese_data,
+  simmr_load(
+    mixtures = mixtures,
+    source_names = source_names,
+    source_means = source_means,
+    source_sds = source_sds,
+    correction_means = correction_means,
+    correction_sds = correction_sds,
+    concentration_means = concentration_means
+  )
+)
+
+
+
+
+library(ggplot2)
+
+# Mixtures (consumers)
+mix_df <- as.data.frame(geese_data$mixtures)
+colnames(mix_df) <- c("d13C", "d15N")
+
+# Sources
+src_df <- as.data.frame(geese_data$source_means)
+colnames(src_df) <- c("d13C", "d15N")
+src_df$Source <- geese_data$source_names
+
+# Plot
+ggplot() +
+  geom_point(data = mix_df, aes(x = d13C, y = d15N), color = "blue", alpha = 0.6) +
+  geom_point(data = src_df, aes(x = d13C, y = d15N), color = "red", shape = 17, size = 3) +
+  geom_text(data = src_df, aes(x = d13C, y = d15N, label = Source), vjust = -1.2) +
+  labs(x = expression(delta^13*C), y = expression(delta^15*N),
+       title = "Isotope Space: Consumers and Sources") +
+  theme_minimal()
+
+
+plot(simmr_in) 
+
+```
+
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+
+simmr_out <- simmr_mcmc(simmr_in)
+
+summary(simmr_out)
+```
