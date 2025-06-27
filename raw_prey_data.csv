@@ -1,0 +1,54 @@
+Species,Common Name,NCSM Collection #,State of Origin,County of Origin,Specimen Type,Collection Date,d13C,d15N,Part of Analysis?
+Blarina carolinensis,southern short tailed shrew,5209,NC,Brunswick,Skin and skull,2/1/1983,-20.26,9.47,Y
+Blarina carolinensis,southern short tailed shrew,6367,NC,Chowan,Skin and skull,5/28/1990,-21.78,6.37,Y
+Blarina carolinensis,southern short tailed shrew,6700,NC,Durham,skin and skull,3/1/1991,-22.5,7.87,Y
+Blarina brevicauda,northern short tailed shrew,6276,NC,Rutherford,skin and skull,12/21/1989,-22.24,7.05,Y
+Blarina brevicauda,northern short tailed shrew,7244,NC,Avery,skin and skull,7/12/1984,-21.9,7.69,Y
+Peromyscus leucopus,white footed mouse,8542,NC,N/A,skin and skull,N/A,-22.56,8.42,Y
+Peromyscus leucopus,white footed mouse,8770,NC,N/A,skin and skull,N/A,-23.04,4.4,Y
+Peromyscus leucopus,white footed mouse,8788,NC,N/A,skin and skull,N/A,-21.52,5.16,Y
+Peromyscus leucopus,white footed mouse,8897,NC,N/A,skin and skull,N/A,-21.42,1.96,Y
+Peromyscus leucopus,white footed mouse,8920,NC,Jones,skin and skull,5/20/1992,-23.57,5.2,Y
+Mus musculus,house mouse,6618,NC,Sampson,skin and skull,2/18/1990,-17.85,6.36,Y
+Mus musculus,house mouse,7148,NC,Carteret,skin and skull,2/5/1992,-18.39,5.45,Y
+Mus musculus,house mouse,7306,NC,Chowan,skin and skull,10/24/1992,error,error,N
+Mus musculus,house mouse,7686,NC,Randolph,skin and skull,10/24/1993,-15.93,8.23,Y
+Mus musculus,house mouse,13983,NC,Wake,"skin, skull and body skeleton",1/5/1999,-18.94,8.33,Y
+Microtus pinetorum,woodland vole,5205,NC,Montgomery,skin and skull,7/4/1987,,,N
+Microtus pinetorum,woodland vole,6114,NC,Chowan,skin and skull,5/6/1989,,,N
+Microtus pinetorum,woodland vole,7676,NC,Chowan,skin and skull,11/9/1993,-25.25,4.36,Y
+Microtus pinetorum,woodland vole,8826,NC,N/A,skin and skull,N/A,-25.66,3.98,Y
+Microtus pinetorum,woodland vole,8904,NC,N/A,skin and skull,N/A,-22.08,6.03,Y
+Tamias striatus,eastern chipmunk,3266,NC,Wake,skin only,10/1/1975,-22.32,4.56,Y
+Tamias striatus,eastern chipmunk,6245,NC,Rutherford,skin only,4/27/1989,-22.13,3.63,Y
+Tamias striatus,eastern chipmunk,6374,NC,Watauga,skin only,6/9/1990,-21.88,4.34,Y
+Tamias striatus,eastern chipmunk,6811,NC,Orange,skin only,7/6/1991,-23.87,5.23,Y
+Tamias striatus,eastern chipmunk,14096,NC,Yancey,"skin, skull and body skeleton",10/23/2000,-23,4.02,Y
+Tamias striatus,eastern chipmunk,N/A,NC,N/A,"skin, skull, and body skeleton",N/A,-22.57,4.2,Y
+Sciurus carolinensis,eastern grey squirrel,659,NC,Sampson,skin and skull,11/20/1959,-21.64,5.33,Y
+Sciurus carolinensis,eastern grey squirrel,736,NC,Transylvania,skin and skull,7/5/1961,,,N
+Sciurus carolinensis,eastern grey squirrel,1083,NC,Wake,skin and skull,10/19/1968,-20.82,4.83,Y
+Sciurus carolinensis,eastern grey squirrel,6431,NC,Rutherford,skin only,9/10/1989,-20.13,4.61,Y
+Sciurus carolinensis,eastern grey squirrel,14992,NC,Wake,"skin, skull and body skeleton",5/19/1999,-23.35,4.25,Y
+Sylvilagus floridanus,eastern cottontail,2829,NC,Haywood,skin and skull,5/30/1905,-23.95,2.04,Y
+Sylvilagus floridanus,eastern cottontail,2996,NC,Dare,skin and skull,4/18/1978,-21.21,2.05,Y
+Sylvilagus floridanus,eastern cottontail,3619,NC,Wake,skin only,3/17/1982,,,N
+Sylvilagus floridanus,eastern cottontail,4013,NC,Granville,skin only,6/24/1983,error,error,N
+Sylvilagus floridanus,eastern cottontail,4157,NC,Haywood,skin and skull,10/26/1983,-24.54,3.37,Y
+Turdus migratorius,American Robin,N/A,NC,Forsyth,full body,10/17/2016,-22.68,3.91,Y
+Turdus migratorius,American Robin,262,NC,Forsyth,full body,2/18/2016,-22.22,6.98,Y
+Pipilo erythrophthalmus,Eastern towhee,254,NC,Forsyth,full body,3/29/2015,-21.45,7.51,Y
+Pipilo erythrophthalmus,Eastern towhee,N/A,NC,Wake ,full body,N/A,-18.03,4.07,Y
+Pipilo erythrophthalmus,Eastern towhee,103,NC,N/A,full body,2017,-24.24,5.56,Y
+Cardinalis cardinalis,Northern cardinal,N/A,NC,Wake,full body,6/18/2014,-21.06,7.46,Y
+Cardinalis cardinalis,Northern cardinal,201,NC,N/A,full body,2016,-20.79,7.32,Y
+Cardinalis cardinalis,Northern cardinal,148,NC,N/A,full body,2016,-21.51,5.78,Y
+Cardinalis cardinalis,Northern cardinal,199,NC,Wake,full body,10/21/2015,-18.78,6.35,Y
+Cardinalis cardinalis,Northern cardinal,200,NC,N/A,full body,9/24/2015,-22.78,5.04,Y
+Zonotrichia albicollis,White throated sparrow,208,NC,N/A,full body,2016,-23.86,4.71,Y
+Zonotrichia albicollis,White throated sparrow,134,NC,Wake,full body,3/1/2016,-23.77,4.22,Y
+Zonotrichia albicollis,White throated sparrow,102,NC,N/A,full body,2017,-22.77,6.17,Y
+Zonotrichia albicollis,White throated sparrow,297,NC,Forsyth,full body,10/26/2016,-24.2,6.48,Y
+Zonotrichia albicollis,White throated sparrow,276,NC,Forsyth,full body,10/26/2016,-23.57,4.92,Y
+Zenaida macruora,Mourning dove,N/A,NC,Wake,full body,9/17/2016,-22.15,6.27,Y
+Zenaida macruora,Mourning dove,387,NC,New Hanover,full body,2014,-17.72,6.12,Y

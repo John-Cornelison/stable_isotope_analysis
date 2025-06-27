@@ -1,5 +1,5 @@
 ---
-title: "Stable Isotope Analysis"
+title: "Copy Cat: A recreation of McDonald et al's stable isotope dietary analysis of cats"
 author: "John Cornelison"
 date: "2025-06-24"
 output: html_document
@@ -21,14 +21,8 @@ library(tidyverse)
 ```{r, echo = FALSE, warning = FALSE< message = FALSE}
 
 data("geese_data")
-
-
-geese_df <- as.data.frame(geese_data)
-
 mixtures_df <- as.data.frame(geese_data["mixtures"])
-
 df_1 <- as.data.frame(geese_data["source_names"])
-
 source_df <- as.data.frame(geese_data$source_means)
 colnames(source_df) <- c("d13C", "d15N")
 rownames(source_df) <- geese_data$source_names
@@ -82,3 +76,29 @@ simmr_out <- simmr_mcmc(simmr_in)
 
 summary(simmr_out)
 ```
+
+### Cat Example Data
+
+```{r, echo = FALSE, warning = FALSE, message=FALSE}
+
+raw_cat_data <- read_csv("raw_cat_data.csv")
+raw_food_data <- read_csv("raw_food_data.csv")
+raw_prey_data <- read_csv("raw_prey_data.csv") %>% 
+  mutate(d13C = as.numeric(d13C),
+         d15N = as.numeric(d15N))
+  
+
+
+# Plot
+ggplot() +
+  geom_point(data = raw_cat_data, aes(x = d13C, y = d15N), color = "blue", alpha = 0.6) +
+  geom_point(data = raw_food_data, aes(x = d13C, y = d15N), color = "red", shape = 17, size = 3) +
+  geom_point(data = raw_prey_data, aes(x = d13C, y = d15N), color = "green", shape = 15, seize = 3) +
+  #geom_text(data = src_df, aes(x = d13C, y = d15N, label = Source), vjust = -1.2) +
+  labs(x = expression(delta^13*C), y = expression(delta^15*N),
+       title = "Isotope Space: Consumers and Sources") +
+  theme_minimal()
+
+
+```
+
