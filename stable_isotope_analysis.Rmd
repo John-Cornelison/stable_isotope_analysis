@@ -17,6 +17,15 @@ library(MixSIAR)
 library(tidyverse)
 
 ```
+```{r, echo = FALSE, warning=FALSE, message=FALSE}
+
+
+
+```
+
+
+
+
 
 ```{r, echo = FALSE, warning = FALSE< message = FALSE}
 
@@ -86,8 +95,21 @@ raw_food_data <- read_csv("raw_food_data.csv")
 raw_prey_data <- read_csv("raw_prey_data.csv") %>% 
   mutate(d13C = as.numeric(d13C),
          d15N = as.numeric(d15N))
-  
 
+analysis_cat_data <- raw_cat_data %>% 
+  filter(`Part of Analysis?` == "Y") %>% 
+  mutate(d13C = as.numeric(d13C),
+         d15N = as.numeric(d15N))
+
+analysis_food_data <- raw_food_data %>% 
+  filter(`Part of Analysis?` == "Y") %>% 
+  mutate(d13C = as.numeric(d13C),
+         d15N = as.numeric(d15N))
+
+analysis_prey_data <- raw_prey_data %>% 
+  filter(`Part of Analysis?` == "Y") %>% 
+  mutate(d13C = as.numeric(d13C),
+         d15N = as.numeric(d15N))
 
 # Plot
 ggplot() +
@@ -98,6 +120,102 @@ ggplot() +
   labs(x = expression(delta^13*C), y = expression(delta^15*N),
        title = "Isotope Space: Consumers and Sources") +
   theme_minimal()
+
+
+# Plot
+ggplot() +
+  geom_point(data = analysis_cat_data, aes(x = d13C, y = d15N), color = "blue", alpha = 0.6) +
+  geom_point(data = analysis_food_data, aes(x = d13C, y = d15N), color = "red", shape = 17, size = 3) +
+  geom_point(data = analysis_prey_data, aes(x = d13C, y = d15N), color = "green", shape = 15, seize = 3) +
+  #geom_text(data = src_df, aes(x = d13C, y = d15N, label = Source), vjust = -1.2) +
+  labs(x = expression(delta^13*C), y = expression(delta^15*N),
+       title = "Isotope Space: Consumers and Sources") +
+  theme_minimal()
+
+
+```
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+
+# source$data_type: means
+# source$by_factor: NA
+# random effects: 0
+# fixed effects: 0
+# nested factors: 
+# factors: 
+# continuous effects: 0
+# error structure: Process only (MixSIR, for N = 1)
+# source$conc_dep: FALSE
+
+
+
+model{
+  for(src in 1:n.sources){
+    for(iso in 1:n.iso){
+      src_mu[src,iso] ~ dnorm(MU_array[src,iso], n_array[src]/SIG2_array[src,iso]);  # Eqn 3.8 but with precision instead of variance
+      tmp.X[src,iso] ~ dchisqr(n_array[src]);
+      src_tau[src,iso] <- tmp.X[src,iso]/(SIG2_array[src,iso]*(n_array[src] - 1));   # Eqn 3.9, following the simulation on p.580
+    } 
+  }
+
+    # draw p.global (global proportion means) from an uninformative Dirichlet,
+    # then ilr.global is the ILR-transform of p.global
+    p.global[1:n.sources] ~ ddirch(alpha[1:n.sources]);
+    for(src in 1:(n.sources-1)){
+      gmean[src] <- prod(p.global[1:src])^(1/src);
+      ilr.global[src] <- sqrt(src/(src+1))*log(gmean[src]/p.global[src+1]); # page 296, Egozcue 2003
+    }
+
+   # DON'T generate individual deviates from the global/region/pack mean (but keep same model structure)
+   for(i in 1:N) {
+      for(src in 1:(n.sources-1)) {
+         ilr.ind[i,src] <- 0;
+         ilr.tot[i,src] <- ilr.global[src] + ilr.ind[i,src]; # add all effects together for each individual (in ilr-space)
+      }
+   }
+
+   # Inverse ILR math (equation 24, page 294, Egozcue 2003)
+   for(i in 1:N){
+      for(j in 1:(n.sources-1)){
+        cross[i,,j] <- (e[,j]^ilr.tot[i,j])/sum(e[,j]^ilr.tot[i,j]);
+      }
+      for(src in 1:n.sources){
+        tmp.p[i,src] <- prod(cross[i,src,]);
+      }
+      for(src in 1:n.sources){
+        p.ind[i,src] <- tmp.p[i,src]/sum(tmp.p[i,]);
+      }
+   }
+
+   for(src in 1:n.sources) {
+      for(i in 1:N){
+         # these are weights for variances
+         p2[i,src] <- p.ind[i,src]*p.ind[i,src];
+      }
+   }
+
+
+   # for each isotope and population, calculate the predicted mixtures
+   for(iso in 1:n.iso) {
+      for(i in 1:N) {
+
+         mix.mu[iso,i] <- inprod(src_mu[,iso],p.ind[i,]) + inprod(frac_mu[,iso],p.ind[i,]);
+      }
+   }
+
+
+  # calculate mix variance and likelihood
+  for(i in 1:N){
+    for(iso in 1:n.iso){
+
+      process.var[iso,i] <- inprod(1/src_tau[,iso],p2[i,]) + inprod(frac_sig2[,iso],p2[i,]);
+      mix.prcsn[iso,i] <- 1/process.var[iso,i];
+      X_iso[i,iso] ~ dnorm(mix.mu[iso,i], mix.prcsn[iso,i]);
+      loglik_mat[i,iso] <- logdensity.norm(X_iso[i,iso], mix.mu[iso,i], mix.prcsn[iso,i]);
+    }
+    loglik[i] <- sum(loglik_mat[i,])
+  }
+}  # end model
 
 
 ```
