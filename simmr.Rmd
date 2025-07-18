@@ -1,0 +1,270 @@
+---
+title: "SGSIE 4 - simmr demo"
+author: "Brian Hayden"
+date: '2021-04-12'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 3 source - 2 isotope mixing model
+
+The previous 2 source - 2 tracer model had several limitations:
+-No variation in sources
+-No variation in enrichment factors (TEF)
+-Cannot handle more than 2 sources
+
+To overcome these we need to use a more copmplex more. In this example we will use the *simmr* mixing model. This is the current supported version of the *SIAR* mixing model. 
+
+In this example we test the relative contribution of pelagic, littoral and profundal resources to the diet of perch and whitefish in L. Vuontis. Once you have completed this worked example, try to recreate the analysis for L. Kivi, the other lake in the 'prelim.csv' dataset. The scripts in this example are edited from an example developed by Andrew Jackson.
+
+The first thing to do is load the packages we will be using during the workshop. I will add them all into this chuck of code for simplicity:
+
+```{r}
+
+library(ggplot2)
+library(reshape2)
+library(plyr)
+library(ggridges)
+library(simmr)  ## Not simmer!!
+```
+
+Next load some data
+```{r}
+data<-read.csv("prelim.csv")
+head(data)
+
+```
+
+
+The first step is to idenitfy the baseline values. Here we will use zooplankton, pooled littoral BMI and pooled profundal BMI as pealgic and littoral and profundal bases respectively. 
+
+```{r}
+endmembers.sum<-ddply(subset(data, Class != "Fish"), c("Lake", "Class"), summarise,
+                d13Cmn=round(mean(d13C),digits = 1),
+                d13Csd=round(sd(d13C),digits = 1),
+                d15Nmn=round(mean(d15N), digits = 1),
+                d15Nsd=round(sd(d15N), digits = 1),
+                X.Cmn=round(mean(X.C),digits = 1),
+                X.Csd=round(sd(X.C),digits = 1),
+                X.Nmn=round(mean(X.N), digits = 1),
+                X.Nsd=round(sd(X.N), digits = 1),
+                n = length(d13C))
+
+head(endmembers.sum)
+
+
+```
+
+Load the simmr data. The R wizards amongst you will be able to extract these from the 'data' data frame, everyone else can use the csv files in the folder....
+
+
+
+```{r}
+
+mix.data <- read.csv("simmrcons.csv")
+head(mix.data)
+
+sources.data <- read.csv("simmrsource.csv")
+head(sources.data)
+
+corrections.data <- read.csv("simmrtef.csv")
+head(corrections.data)
+
+concs <- read.csv("simmrconc.csv")
+head(concs)
+```
+
+While `siar` took these files in this format, `simmr` requires us to strip out some of the data and put them in their own vector objects. It then bundles them into a special object of class `simmr` which makes it tidier in the long run, as special functions within the package can recognise the object and calculate and plot all the various analyses we seek just by being given this single object. Note that in all that follows I am specifying the d13C data first and the d15N data second.
+
+```{r create-simmr-object}
+
+# the mixtures (consumers) need to be a two column matrix
+mix <- cbind(mix.data$d13C, mix.data$d15N)
+
+# the groups need to be integer codes that identify each group of consumers
+# and correspond to the mix data above
+grp <- mix.data$Code
+
+# the sources are split into a vector of names, and matrices of means
+# and standard deviations
+s_names <- as.vector(sources.data$Means)
+s_means <- cbind(sources.data$meand13C, sources.data$meand15N)
+s_sds   <- cbind(sources.data$sdd13C,   sources.data$sdd15N)
+
+# the corrections are specified similarly but do not need a name vector
+c_means <- cbind(corrections.data$meand13C, corrections.data$meand15N)
+c_sds   <- cbind(corrections.data$sdd13C, corrections.data$sdd15N)
+
+# concentrations - set to all one in this example so effectively it has 
+# no effect.
+
+conc_means <- cbind(concs$meand13C, concs$meand15N)
+conc_sds   <- cbind(concs$sdd13C, concs$sdd15N)
+
+# finally create our simmr object
+
+simmr_in = simmr_load(mixtures=mix,
+                     source_names=s_names,
+                     source_means=s_means,
+                     source_sds=s_sds,
+                     correction_means=c_means,
+                     correction_sds=c_sds,
+                     concentration_means = conc_means,
+                     group=grp)
+
+
+```
+
+The raw data can then be plotted as a biplot and the `plot.simmr_in` method allows some customisation: see `?plot.simmr_in` for more options. But, bear in mind that if you want to do anything specific with your plot, you will need to get stuck into writing your own `ggplot` script using the templates and ideas covered earlier in the course.
+
+```{r quick-biplot}
+
+plot(simmr_in, xlab=expression(paste(delta^13, "C (\u2030)",sep="")), 
+     ylab=expression(paste(delta^15, "N (\u2030)",sep="")), 
+     title='Isospace plot of L. Vuontis', group = 1:2)
+```
+
+## Fit the model
+
+The next thing we might do is to fit the model. Again the help file for `?simmr_mcmc` provides details on the number of iterations to be sampled from the posterior distributions of all the parameters, and also allows you to set the priors. It defaults to a basic run, which will give you a good feel for most datasets at least as a starting point. As the model is fit, `JAGS`, which does the actual mcmc model fitting, prints its progress to the console window.
+
+```{r fit-simmr, message=FALSE, results = "hide"}
+
+simmr_out <- simmr_mcmc(simmr_in)
+
+```
+
+With the model run, we want to get some information on the model using `summary()`. This is a special summary function that provides information on both the model fit, and also the parameters which is really what we are interested in. Model fit is assessed by the Gelman diagnostic where we want all parameters to be close to 1 - in this case they are exactly 1. This diagnostic determines how well the chains (4 in this case) have converged. The summary of the parameter estimates includes some common quantiles (2.5, 25, 50, 75 and 97.5% quantiles), along with their mean and standard deviation. We also get a matrix of the correlations among the posterior samples for these parameters - more on this later. The plots of this convergence always start off away from 1, but should move towards, and stay close to 1 for the remainder of the trace. 
+
+```{r summarise-output}
+
+# text based output
+summary(simmr_out)
+
+# visualise the convergence
+plot(simmr_out, type='convergence', group = 1:2)
+
+```
+
+
+## Visualise the output
+
+The basic way to visualise the posterior estimates is to use either density plots of the posterior distribution, or boxplot summaries, or we might try to use the siar/siber style density plots which use the package `hdrcde` ( we will use this when plotting siber data later in course). We need to pick which group we want to visualise with these basic plotting functions, and in this  example we have 2 groups to choose from: 1-whitefish and 2-perch
+
+```{r plot-outputs}
+
+# A density plot
+plot(simmr_out, type = "density", group = 1)
+plot(simmr_out, type = "density", group = 2)
+
+# A boxplot plot of two contrasting groups
+plot(simmr_out, type = "boxplot", group = 1)
+plot(simmr_out, type = "boxplot", group = 2)
+
+
+
+```
+Those figures provide information on the estimates of the key parameters on their own (their marginal esimates) but many parameters in a model are correlated in some way, and this is especially true of the proportions since they must sum to one. Understanding the correlations among the estimated proportions provides some really useful information that is key to the interpretation of the output, and is something we need to discuss in person during this course.
+
+```{r plot-correlations}
+
+plot(simmr_out, type='matrix', group = 1)
+
+
+```
+
+## Comparing across sources and groups
+
+Often, we are intersetd in specific sources and how their proportion in the diet differs among groups, rather than just simply presenting what each group is eating. In the case of these geese, we are particularly interested in how the geese differ in their consumption of Zostera and terrestrial grass over teh course of time where our 8 groups represent 8 time points over two seasons. Some simple functions allow us to do this:
+
+```{r compare-sources}
+
+compare_sources(simmr_out,source_names=c('ZPL','Litt','Prof'), 
+                group = c(2))
+
+```
+
+
+Comparing group is done in a similar manner, and this time we choose which source we want to visualise across groups. As well as plotting, these functions also return the probabilities of all the possible orders of proportions from largest to smallest. 
+
+```{r compare-groups}
+
+# consumption of ZPL changes over timex
+compare_ZPL <- compare_groups(simmr_out,source = 'ZPL', groups = 1:2)
+
+
+# and we can see how the consumption of littoral resources mirror this
+compare_Litt <- compare_groups(simmr_out,source = 'Litt'  , groups = 1:2)
+
+# and we can see how the consumption of profundal mirror this
+compare_Prof <- compare_groups(simmr_out,source = 'Prof'  , groups = 1:2)
+
+
+
+```
+
+## Combining sources
+
+As mentioned in the lecture, we may want to combine sources, particuallarly if n-sources . n-isootpes + 1, and there is a ecologicaly sound reason. Simmr allows us to perform **a posteriori** aggregation of the proportions assigned to each source. Since each iteration of the mcmc fitting process produces proportions that sum to one, we can simply add up two or more of these proportions, for every iteration. What is nice about this approach is that the resultant distribution is usually more precise, since there is generally negative correlation among these proportions (see the matrix plots above), and when we add two variances, the equation is $var(a+b) = var(a) + var(b) + 2*cov(a,b)$, and so when the covariance is negative, so the summed variance can shrink.
+
+In this dataset, we dont really care much that the geese are eating profundal or littoral BMI, so we might just lump these into a category of "Benthic". All the plotting and summary options we presented above will work on this new combined data structure.
+
+```{r}
+combined_sources <- combine_sources(simmr_out,
+                                    to_combine = c('Litt','Prof'),
+                                    new_source_name = 'Benthic')
+                                    
+plot(combined_sources, group = 1, type = "boxplot")
+plot(combined_sources, group = 2, type = "boxplot")
+
+```
+
+```{r}
+
+
+con1_string1<-data.frame(unlist(simmr_out[["output"]][[1]][[1]]))
+con1_string2<-data.frame(unlist(simmr_out[["output"]][[1]][[2]]))
+con1_string3<-data.frame(unlist(simmr_out[["output"]][[1]][[3]]))
+con1_string4<-data.frame(unlist(simmr_out[["output"]][[1]][[4]]))
+con1<-rbind(con1_string1, con1_string2, con1_string3, con1_string4)[,c(1:3)]
+con1$con<-"LSR"
+con1$Lake<-"Vuontis"
+
+
+con2_string1<-data.frame(unlist(simmr_out[["output"]][[2]][[1]]))
+con2_string2<-data.frame(unlist(simmr_out[["output"]][[2]][[2]]))
+con2_string3<-data.frame(unlist(simmr_out[["output"]][[2]][[3]]))
+con2_string4<-data.frame(unlist(simmr_out[["output"]][[2]][[4]]))
+con2<-rbind(con2_string1, con2_string2, con2_string3, con2_string4)[,c(1:3)]
+con2$con<-"Perch"
+con2$Lake<-"Vuontis"
+
+lake<-rbind(con1,con2)
+
+lake.melt<-melt(lake, id.vars=c("con", "Lake"))
+colnames(lake.melt)<-c("Consumer", "Lake", "Source", "Prop")
+
+
+
+ggplot(lake.melt, aes(x = Prop, y = Source, fill = Source)) + 
+   geom_density_ridges(scale = 4) +
+  facet_grid(Consumer ~ .)
+  
+  
+   scale_fill_cyclical(values = c("blue", "green", "purple"))
+
+
+
+```
+
+
+
+
+
+
+
+
+

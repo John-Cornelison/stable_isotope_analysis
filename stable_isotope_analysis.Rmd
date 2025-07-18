@@ -2,7 +2,11 @@
 title: "Copy Cat: A recreation of McDonald et al's stable isotope dietary analysis of cats"
 author: "John Cornelison"
 date: "2025-06-24"
-output: html_document
+output:
+  html_document:
+    code_folding: show  # or "hide"
+    toc: true           # optional: adds a table of contents
+    toc_depth: 2 
 ---
 
 ```{r setup, include=FALSE}
@@ -15,9 +19,418 @@ knitr::opts_chunk$set(echo = TRUE)
 library(simmr)
 library(MixSIAR)
 library(tidyverse)
+library(plyr)
+library(DT)
+
+raw_cat_data <- read_csv("raw_cat_data.csv")
+raw_food_data <- read_csv("raw_food_data.csv")
+raw_prey_data <- read_csv("raw_prey_data.csv") %>% 
+  mutate(d13C = as.numeric(d13C),
+         d15N = as.numeric(d15N))
+posterior_probabilities <- read_csv("McDonalPaperPosteriorProbabilities.csv") %>%
+  fill(Cat, .direction = "down") %>% 
+  fill(Identifier, .direction = "down") %>% 
+  mutate(variable = case_when(variable == ".globabl.CombinedPrey" ~ "p.global.CombinedPrey",
+                              TRUE ~ variable),
+         McDonald_Classification = case_when(`50%` >= 0.245 ~ "Hunter",
+                                             `50%` < 0.245 ~ "Non Hunter",
+                                             TRUE ~ "Unkown"),
+         `CI_width` = `97.50%`-`2.50%`) %>% 
+  filter(Variable == "p.global.CombinedPrey")
+  filter()
+
 
 ```
-```{r, echo = FALSE, warning=FALSE, message=FALSE}
+
+
+
+### McDonald Et al paper
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+
+
+# 1. Read in the raw CSVs ---------------------------------------
+prey_raw <- read_csv("raw_prey_data.csv") 
+food_raw <- read_csv("raw_food_data.csv")
+cat_raw  <- read_csv("raw_cat_data.csv")
+
+# Filter to only samples marked "Y" for analysis
+prey  <- prey_raw  %>% filter(`Part of Analysis?` == "Y")
+food  <- food_raw  %>% filter(`Part of Analysis?` == "Y")
+cats  <- cat_raw   %>% filter(`Part of Analysis?` == "Y") 
+
+# Restrict to Southeast US cats (the only ones analyzed in the paper)
+cats_se <- cats %>% filter(`Region` == "Southeast")
+
+# 2. Define trophic‐enrichment (TEF) -----------------------------
+# As per McDonald et al., Δ13C = +2.6‰, Δ15N = +1.9‰
+TEF_means <- c(2.6, 1.9)
+TEF_sds   <- c(0.10, 0.10)  # small uncertainty
+
+# 3. Build the “CombinedPrey” source -----------------------------
+prey_means <- prey %>% 
+  summarise(d13C = mean(d13C), d15N = mean(d15N)) %>% 
+  as.numeric()
+
+prey_sds <- prey %>% 
+  summarise(d13C = sd(d13C),   d15N = sd(d15N))   %>% 
+  as.numeric()
+
+# 4. Aggregate food by Brand + Type --------------------------------
+# First tag whether each food sample is dry vs wet
+food2 <- food %>% 
+  mutate(
+    type = if_else(is.na(`$/can (WF)`), "Dry", "Wet"),
+    # further split wet into fish‐based vs meat‐based (simple keyword match)
+    type = case_when(
+      type == "Wet" & str_detect(Flavor, regex("tuna|salmon|ocean|fish", ignore_case=TRUE)) ~ "WetFish",
+      TRUE ~ type
+    )
+  )
+
+# Then average replicates by Brand & type
+food_src <- food2 %>% 
+  group_by(Brand, type) %>% 
+  filter(n() >= 2) %>%      # require >=2 replicates per source
+  summarise(
+    d13C_mean = mean(d13C),
+    d13C_sd   = sd(d13C),
+    d15N_mean = mean(d15N),
+    d15N_sd   = sd(d15N)
+  ) %>% 
+  ungroup()
+
+# 5. Run simmr for each cat ---------------------------------------
+
+# the mixtures (consumers) need to be a two column matrix
+mix_cats <- cbind(cats$d13C, cats$d15N)
+
+# the groups need to be integer codes that identify each group of consumers
+# and correspond to the mix data above
+
+####We are not comparing two different groups, so we do not need this 
+#grp <- mix.data$Code
+
+# the sources are split into a vector of names, and matrices of means
+# and standard deviations
+prey_prepped <- prey %>%
+  mutate(name = "Prey",
+         d13C = as.numeric(d13C),
+         d15N = as.numeric(d15N)) %>% 
+  select(name, d13C, d15N) %>% 
+  group_by(name) %>% 
+  summarise(name = "Prey",
+    meand13C = mean(d13C),
+            sdd13C = sd(d13C),
+            meand15N = mean(d15N),
+            sdd15N = sd(d15N))
+
+wet_food <- food2 %>%
+  mutate(type = case_when(type == "WetFish" ~ "Wet",
+                          TRUE ~ type),
+         name = case_when(type == "Wet" ~ "Wet",
+                          TRUE ~ "Dry")) %>%
+  filter(name == "Wet") %>% 
+  group_by(name) %>% 
+  summarise(name = "Wet",
+            meand13C = mean(d13C),
+            sdd13C = sd(d13C),
+            meand15N = mean(d15N),
+            sdd15N = sd(d15N))
+
+dry_food <- food2 %>%
+  mutate(type = case_when(type == "WetFish" ~ "Wet",
+                          TRUE ~ type),
+         name = case_when(type == "Wet" ~ "Wet",
+                          TRUE ~ "Dry")) %>%
+  filter(name == "Dry") %>% 
+  group_by(name) %>% 
+  summarise(name = "Dry",
+            meand13C = mean(d13C),
+            sdd13C = sd(d13C),
+            meand15N = mean(d15N),
+            sdd15N = sd(d15N))
+
+
+cat_srcs <- rbind(prey_prepped, wet_food, dry_food) %>% 
+  mutate(C_d13C_mean = 2.6,
+         C_d15N_mean = 1.9,
+         C_d13C_sd = 0,
+         C_d15N_sd = 0)
+
+
+s_names <- as.vector(cat_srcs$name)
+s_means <- cbind(cat_srcs$meand13C, cat_srcs$meand15N)
+s_sds   <- cbind(cat_srcs$sdd13C,   cat_srcs$sdd15N)
+
+# the corrections are specified similarly but do not need a name vector
+c_means <- cbind(cat_srcs$C_d13C_mean, cat_srcs$C_d15N_mean)
+c_sds   <- cbind(cat_srcs$C_d13C_sd, cat_srcs$C_d15N_sd)
+
+#McDonald et al did not include concentration means
+#conc_means <- cbind(concs$meand13C, concs$meand15N)
+#conc_sds   <- cbind(concs$sdd13C, concs$sdd15N)
+
+# finally create our simmr object
+
+#Checking whether these are True
+#nrow(s_means) == length(s_names)  # must be TRUE
+#ncol(s_means) == 2                # must be TRUE
+#all(dim(s_means) == dim(s_sds))  # must be TRUE
+#all(dim(s_means) == dim(c_means))
+
+simmr_in = simmr_load(mixtures=mix_cats,
+                     source_names=s_names,
+                     source_means=s_means,
+                     source_sds=s_sds,
+                     correction_means=c_means,
+                     correction_sds=c_sds)
+
+
+
+
+plot(simmr_in)
+
+simmr_out <- simmr_mcmc(simmr_in)
+
+knitr::kable(summary(simmr_out))
+
+# 1. Define your TEFs
+tef_C <- 2.6   # ‰ for δ13C
+tef_N <- 1.9   # ‰ for δ15N
+
+# 2. Prepare consumer data (unchanged)
+analysis_cat_data <- raw_cat_data %>% 
+  filter(`Part of Analysis?` == "Y") %>% 
+  mutate(
+    d13C = as.numeric(d13C),
+    d15N = as.numeric(d15N)
+  )
+
+library(FNN)
+
+
+# Find 5 nearest neighbors for each observation
+set.seed(123)  # for reproducibility
+kmeans_result <- kmeans(analysis_cat_data[, c("d13C", "d15N")], centers = 2)
+
+analysis_cat_clustered <- analysis_cat_data %>%
+  mutate(cluster = as.factor(kmeans_result$cluster),
+         cluster = case_when(cluster == 1 ~ "Hunter",
+                             cluster == 2 ~ "Non Hunters"),
+         paper_classification = case_when("Identifier" == "H84" ~ "",))
+
+## Initial results
+ggplot(analysis_cat_clustered, aes(x = d13C, y = d15N, color = cluster)) +
+  geom_point(size = 3, alpha = 0.7) +
+  labs(
+    x = expression(delta^13*C),
+    y = expression(delta^15*N),
+    title = "Clusters of Cats by Isotope Values"
+  ) +
+  theme_minimal()
+
+# 3. Prepare source data WITH TEF applied
+analysis_food_data_tef <- raw_food_data %>% 
+  filter(`Part of Analysis?` == "Y") %>% 
+  mutate(
+    d13C = as.numeric(d13C) + tef_C,
+    d15N = as.numeric(d15N) + tef_N)
+
+analysis_prey_data_tef <- raw_prey_data %>% 
+  filter(`Part of Analysis?` == "Y") %>% 
+  mutate(
+    d13C = as.numeric(d13C) + tef_C,
+    d15N = as.numeric(d15N) + tef_N
+  )
+
+
+
+ggplot() +
+  # Cats: big blue dots
+  geom_point(
+    data = analysis_cat_data,
+    aes(x = d13C, y = d15N, color = "Cats", shape = "Cats"),
+    size  = 3,
+    alpha = 0.8
+  ) +
+  # Pet food: small red triangles, more transparent
+  geom_point(
+    data = analysis_food_data_tef,
+    aes(x = d13C, y = d15N, color = "Pet food", shape = "Pet food"),
+    size  = 2.5,
+    alpha = 0.5
+  ) +
+  # Prey: small green squares, more transparent
+  geom_point(
+    data = analysis_prey_data_tef,
+    aes(x = d13C, y = d15N, color = "Prey", shape = "Prey"),
+    size  = 2.5,
+    alpha = 0.5
+  ) +
+  # Define the exact colors and shapes for each label
+  scale_color_manual(
+    name   = NULL,
+    values = c("Cats" = "blue", "Pet food" = "red", "Prey" = "green")
+  ) +
+  scale_shape_manual(
+    name   = NULL,
+    values = c("Cats"     = 16,  # solid circle
+               "Pet food" = 17,  # triangle
+               "Prey"     = 15)  # square
+  ) +
+  labs(
+    x     = expression(delta^13*C),
+    y     = expression(delta^15*N),
+    title = "Isotope Space: Consumers and TEF-Adjusted Sources"
+  ) +
+  theme_minimal() +
+  lims(x = c(-21.3, -14),
+       y = c(4.7, 10.2))
+
+
+
+# Ensure cluster is a factor (for consistent coloring)
+analysis_cat_clustered <- analysis_cat_clustered %>%
+  mutate(cluster = as.factor(cluster))
+
+library(dplyr)
+library(ggplot2)
+
+# Make sure cluster is a factor
+analysis_cat_clustered <- analysis_cat_clustered %>%
+  mutate(Source = case_when(
+    cluster == 1 ~ "Hunter",
+    cluster == 2 ~ "Non Hunter",
+    ))
+
+# Add a source column to food and prey
+food_labeled <- analysis_food_data_tef %>%
+  mutate(Source = "Pet food")
+
+prey_labeled <- analysis_prey_data_tef %>%
+  mutate(Source = "Prey")
+
+combined_plot_data <- bind_rows(
+  analysis_cat_clustered %>% select(d13C, d15N, Source, Name, Identifier),
+  food_labeled %>% select(d13C, d15N, Source),
+  prey_labeled %>% select(d13C, d15N, Source)
+)
+
+source_shapes <- c("Pet food" = 17, "Prey" = 15,
+                   "Hunter" = 16, "Non Hunter" = 16)
+
+source_colors <- c("Pet food" = "red", "Prey" = "green",
+                   "Hunter" = "orange", "Non Hunter" = "purple")
+
+p <- ggplot() +
+  # Cats (Hunter & Non Hunter): larger, more opaque
+  geom_point(
+    data = combined_plot_data %>% filter(Source %in% c("Hunter", "Non Hunter")),
+    aes(x = d13C, y = d15N, color = Source, shape = Source),
+    size  = 3.5,
+    alpha = 0.8
+  ) +
+  # Pet food: smaller, more transparent
+  geom_point(
+    data = combined_plot_data %>% filter(Source == "Pet food"),
+    aes(x = d13C, y = d15N, color = Source, shape = Source),
+    size  = 2,
+    alpha = 6
+  ) +
+  # Prey: smaller, more transparent
+  geom_point(
+    data = combined_plot_data %>% filter(Source == "Prey"),
+    aes(x = d13C, y = d15N, color = Source, shape = Source),
+    size  = 2,
+    alpha = 0.6
+  ) +
+  # 2. Add ellipses around the two cat groups
+  stat_ellipse(
+    data = combined_plot_data %>% filter(Source %in% c("Hunter", "Non Hunter")),
+    aes(x = d13C, y = d15N, color = Source),
+    type     = "norm",
+    level    = 0.95,
+    linetype = "dashed",
+    size     = 1,
+    inherit.aes = FALSE
+  ) +
+  # 3. Scales & labels
+  scale_color_manual(values = source_colors) +
+  scale_shape_manual(values = source_shapes) +
+  labs(
+    x     = expression(delta^13*C),
+    y     = expression(delta^15*N),
+    title = "Isotope Space: Hunter Status and TEF-Adjusted Sources",
+    color = "Group",
+    shape = "Group"
+  ) +
+  theme_minimal() +
+  lims(x = c(-21.3, -14), y = c(4.7, 10.2))
+
+# 4. Print
+print(p)
+
+
+combined_plot_data <- combined_plot_data %>%
+  mutate(hover_text = paste0("Identifier: ", Identifier, "<br>Name: ", Name))
+
+
+p <- ggplot() +
+  geom_point(
+    data = combined_plot_data %>% filter(Source %in% c("Hunter", "Non Hunter")),
+    aes(
+      x = d13C,
+      y = d15N,
+      color = Source,
+      shape = Source,
+      text = hover_text
+    ),
+    size  = 3.5,
+    alpha = 0.8
+  ) +
+  labs(x = "δ13C", y = "δ15N") +
+  lims(x = c(-21,-13), y = c(4,9))# Use Unicode symbols
+
+
+# Convert to plotly with custom tooltip
+ggplotly(p, tooltip = "text")
+
+library(plotly)
+
+table(analysis_cat_clustered$cluster)
+
+datatable(posterior_probabilities)
+
+```
+McDonald Et al don't specifically mention how they calculated the Trophic Enrichment/Discriminatory Factor, but I am assuming they used this equation, (Fry, 2006): Δ=δc−δf where c refers to the isotopic signature/mixture of the consumer, and the f refers to the isotopic signature/mixture of the food source at equilibrium. Essentially, that occurs when the consumer has fed on the food long enough to where there signature values are no longer changing.
+
+
+### Brian's Video Series
+
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
+
+fish_example <- read_csv("prelim.csv")
+
+fish_summary <- ddply(fish_example, c("Lake","Species"), summarise,
+                      count = length(Species),
+                      mc = mean(d13C), sdC = sd(d13C),
+                      mN = mean(d15N), sdN = sd(d15N))
+
+lake_summary <- ddply(fish_example, c("Lake"), summarise,
+                      count = length(Species),
+                      mc = mean(d13C), sdC = sd(d13C),
+                      mN = mean(d15N), sdN = sd(d15N))
+
+perch_Lsr <- fish_example %>% 
+  filter(Species %in% c("lsr", "perch"))
+
+ggplot(data = perch_Lsr, aes(x = Species, y = d13C, group = Species)) +
+  geom_boxplot()+
+  geom_jitter() +
+  facet_grid(~ Lake)
+
+
 
 
 
@@ -26,8 +439,7 @@ library(tidyverse)
 
 
 
-
-```{r, echo = FALSE, warning = FALSE< message = FALSE}
+```{r, echo = FALSE, warning = FALSE, message = FALSE}
 
 data("geese_data")
 mixtures_df <- as.data.frame(geese_data["mixtures"])
@@ -133,6 +545,78 @@ ggplot() +
   theme_minimal()
 
 
+
+# 1. Define your TEFs
+tef_C <- 2.6   # ‰ for δ13C
+tef_N <- 1.9   # ‰ for δ15N
+
+# 2. Prepare consumer data (unchanged)
+analysis_cat_data <- raw_cat_data %>% 
+  filter(`Part of Analysis?` == "Y") %>% 
+  mutate(
+    d13C = as.numeric(d13C),
+    d15N = as.numeric(d15N)
+  )
+
+# 3. Prepare source data WITH TEF applied
+analysis_food_data_tef <- raw_food_data %>% 
+  filter(`Part of Analysis?` == "Y") %>% 
+  mutate(
+    d13C = as.numeric(d13C) + tef_C,
+    d15N = as.numeric(d15N) + tef_N
+  )
+
+analysis_prey_data_tef <- raw_prey_data %>% 
+  filter(`Part of Analysis?` == "Y") %>% 
+  mutate(
+    d13C = as.numeric(d13C) + tef_C,
+    d15N = as.numeric(d15N) + tef_N
+  )
+
+
+
+ggplot() +
+  # Cats: big blue dots
+  geom_point(
+    data = analysis_cat_data,
+    aes(x = d13C, y = d15N, color = "Cats", shape = "Cats"),
+    size  = 3,
+    alpha = 0.8
+  ) +
+  # Pet food: small red triangles, more transparent
+  geom_point(
+    data = analysis_food_data_tef,
+    aes(x = d13C, y = d15N, color = "Pet food", shape = "Pet food"),
+    size  = 2.5,
+    alpha = 0.5
+  ) +
+  # Prey: small green squares, more transparent
+  geom_point(
+    data = analysis_prey_data_tef,
+    aes(x = d13C, y = d15N, color = "Prey", shape = "Prey"),
+    size  = 2.5,
+    alpha = 0.5
+  ) +
+  # Define the exact colors and shapes for each label
+  scale_color_manual(
+    name   = NULL,
+    values = c("Cats" = "blue", "Pet food" = "red", "Prey" = "green")
+  ) +
+  scale_shape_manual(
+    name   = NULL,
+    values = c("Cats"     = 16,  # solid circle
+               "Pet food" = 17,  # triangle
+               "Prey"     = 15)  # square
+  ) +
+  labs(
+    x     = expression(delta^13*C),
+    y     = expression(delta^15*N),
+    title = "Isotope Space: Consumers and TEF-Adjusted Sources"
+  ) +
+  theme_minimal()
+
+
+
 ```
 
 ```{r, echo = FALSE, warning = FALSE, message = FALSE}
@@ -149,73 +633,73 @@ ggplot() +
 
 
 
-model{
-  for(src in 1:n.sources){
-    for(iso in 1:n.iso){
-      src_mu[src,iso] ~ dnorm(MU_array[src,iso], n_array[src]/SIG2_array[src,iso]);  # Eqn 3.8 but with precision instead of variance
-      tmp.X[src,iso] ~ dchisqr(n_array[src]);
-      src_tau[src,iso] <- tmp.X[src,iso]/(SIG2_array[src,iso]*(n_array[src] - 1));   # Eqn 3.9, following the simulation on p.580
-    } 
-  }
-
-    # draw p.global (global proportion means) from an uninformative Dirichlet,
-    # then ilr.global is the ILR-transform of p.global
-    p.global[1:n.sources] ~ ddirch(alpha[1:n.sources]);
-    for(src in 1:(n.sources-1)){
-      gmean[src] <- prod(p.global[1:src])^(1/src);
-      ilr.global[src] <- sqrt(src/(src+1))*log(gmean[src]/p.global[src+1]); # page 296, Egozcue 2003
-    }
-
-   # DON'T generate individual deviates from the global/region/pack mean (but keep same model structure)
-   for(i in 1:N) {
-      for(src in 1:(n.sources-1)) {
-         ilr.ind[i,src] <- 0;
-         ilr.tot[i,src] <- ilr.global[src] + ilr.ind[i,src]; # add all effects together for each individual (in ilr-space)
-      }
-   }
-
-   # Inverse ILR math (equation 24, page 294, Egozcue 2003)
-   for(i in 1:N){
-      for(j in 1:(n.sources-1)){
-        cross[i,,j] <- (e[,j]^ilr.tot[i,j])/sum(e[,j]^ilr.tot[i,j]);
-      }
-      for(src in 1:n.sources){
-        tmp.p[i,src] <- prod(cross[i,src,]);
-      }
-      for(src in 1:n.sources){
-        p.ind[i,src] <- tmp.p[i,src]/sum(tmp.p[i,]);
-      }
-   }
-
-   for(src in 1:n.sources) {
-      for(i in 1:N){
-         # these are weights for variances
-         p2[i,src] <- p.ind[i,src]*p.ind[i,src];
-      }
-   }
-
-
-   # for each isotope and population, calculate the predicted mixtures
-   for(iso in 1:n.iso) {
-      for(i in 1:N) {
-
-         mix.mu[iso,i] <- inprod(src_mu[,iso],p.ind[i,]) + inprod(frac_mu[,iso],p.ind[i,]);
-      }
-   }
-
-
-  # calculate mix variance and likelihood
-  for(i in 1:N){
-    for(iso in 1:n.iso){
-
-      process.var[iso,i] <- inprod(1/src_tau[,iso],p2[i,]) + inprod(frac_sig2[,iso],p2[i,]);
-      mix.prcsn[iso,i] <- 1/process.var[iso,i];
-      X_iso[i,iso] ~ dnorm(mix.mu[iso,i], mix.prcsn[iso,i]);
-      loglik_mat[i,iso] <- logdensity.norm(X_iso[i,iso], mix.mu[iso,i], mix.prcsn[iso,i]);
-    }
-    loglik[i] <- sum(loglik_mat[i,])
-  }
-}  # end model
+# model{
+#   for(src in 1:n.sources){
+#     for(iso in 1:n.iso){
+#       src_mu[src,iso] ~ dnorm(MU_array[src,iso], n_array[src]/SIG2_array[src,iso]);  # Eqn 3.8 but with precision instead of variance
+#       tmp.X[src,iso] ~ dchisqr(n_array[src]);
+#       src_tau[src,iso] <- tmp.X[src,iso]/(SIG2_array[src,iso]*(n_array[src] - 1));   # Eqn 3.9, following the simulation on p.580
+#     } 
+#   }
+# 
+#     # draw p.global (global proportion means) from an uninformative Dirichlet,
+#     # then ilr.global is the ILR-transform of p.global
+#     p.global[1:n.sources] ~ ddirch(alpha[1:n.sources]);
+#     for(src in 1:(n.sources-1)){
+#       gmean[src] <- prod(p.global[1:src])^(1/src);
+#       ilr.global[src] <- sqrt(src/(src+1))*log(gmean[src]/p.global[src+1]); # page 296, Egozcue 2003
+#     }
+# 
+#    # DON'T generate individual deviates from the global/region/pack mean (but keep same model structure)
+#    for(i in 1:N) {
+#       for(src in 1:(n.sources-1)) {
+#          ilr.ind[i,src] <- 0;
+#          ilr.tot[i,src] <- ilr.global[src] + ilr.ind[i,src]; # add all effects together for each individual (in ilr-space)
+#       }
+#    }
+# 
+#    # Inverse ILR math (equation 24, page 294, Egozcue 2003)
+#    for(i in 1:N){
+#       for(j in 1:(n.sources-1)){
+#         cross[i,,j] <- (e[,j]^ilr.tot[i,j])/sum(e[,j]^ilr.tot[i,j]);
+#       }
+#       for(src in 1:n.sources){
+#         tmp.p[i,src] <- prod(cross[i,src,]);
+#       }
+#       for(src in 1:n.sources){
+#         p.ind[i,src] <- tmp.p[i,src]/sum(tmp.p[i,]);
+#       }
+#    }
+# 
+#    for(src in 1:n.sources) {
+#       for(i in 1:N){
+#          # these are weights for variances
+#          p2[i,src] <- p.ind[i,src]*p.ind[i,src];
+#       }
+#    }
+# 
+# 
+#    # for each isotope and population, calculate the predicted mixtures
+#    for(iso in 1:n.iso) {
+#       for(i in 1:N) {
+# 
+#          mix.mu[iso,i] <- inprod(src_mu[,iso],p.ind[i,]) + inprod(frac_mu[,iso],p.ind[i,]);
+#       }
+#    }
+# 
+# 
+#   # calculate mix variance and likelihood
+#   for(i in 1:N){
+#     for(iso in 1:n.iso){
+# 
+#       process.var[iso,i] <- inprod(1/src_tau[,iso],p2[i,]) + inprod(frac_sig2[,iso],p2[i,]);
+#       mix.prcsn[iso,i] <- 1/process.var[iso,i];
+#       X_iso[i,iso] ~ dnorm(mix.mu[iso,i], mix.prcsn[iso,i]);
+#       loglik_mat[i,iso] <- logdensity.norm(X_iso[i,iso], mix.mu[iso,i], mix.prcsn[iso,i]);
+#     }
+#     loglik[i] <- sum(loglik_mat[i,])
+#   }
+# }  # end model
 
 
 ```
